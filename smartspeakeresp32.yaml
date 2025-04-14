@@ -22,11 +22,13 @@ ota:
     password: !secret smartspeaker_ota_key
 
 wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-  fast_connect: true
+  networks: 
+  - ssid: !secret wifi_ssid
+    password: !secret wifi_password
+    hidden: true
+    bssid: 9C:EF:D5:F9:59:EA
 
-  reboot_timeout: 30s # we seem to run into the 'issues requiring a full reboot' every time
+  reboot_timeout: 3min # we seem to run into the 'issues requiring a full reboot' every time
 
   manual_ip:
     static_ip: 10.20.0.21
