@@ -26,6 +26,8 @@ wifi:
   password: !secret wifi_password
   fast_connect: true
 
+  reboot_timeout: 30s # we seem to run into the 'issues requiring a full reboot' every time
+
   manual_ip:
     static_ip: 10.20.0.21
     gateway: 10.20.0.1
@@ -51,11 +53,14 @@ output:
   - platform: ledc
     pin: GPIO46
     id: output_RED
+    inverted: true
 
   - platform: ledc
     pin: GPIO0
     id: output_GREEN
+    inverted: true
 
   - platform: ledc
     pin: GPIO45
     id: output_BLUE
+    inverted: true
