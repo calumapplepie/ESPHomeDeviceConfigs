@@ -8,11 +8,9 @@ esp32:
     type: esp-idf
     version: recommended
 
-    sdkconfig_options:
-
 # Enable logging
 logger:
-  level: DEBUG
+  level: VERBOSE
 
 # Enable Home Assistant API
 api:
