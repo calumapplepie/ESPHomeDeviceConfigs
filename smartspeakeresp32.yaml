@@ -90,4 +90,19 @@ microphone:
       - logger.log:
           format: "Received %d bytes"
           args: ['x.size()']
-      - lambda: 
+      - sensor.template.publish:
+          id: adc_average
+          state: !lambda |-
+            int size = x.size();
+            double sum  = 0;
+            for(auto i : x) {
+              sum += i;
+            }
+            return sum / size;
+
+sensor:
+  id: adc_average
+  name: "ADC Average Value"
+  platform: template
+  accuracy_decimals: 5
+  expire_after: 5s
