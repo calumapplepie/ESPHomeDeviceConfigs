@@ -8,6 +8,11 @@ esp32:
     type: esp-idf
     version: recommended
 
+external_components:
+  - source: github://stas-sl/esphome-sound-level-meter
+  - source: github://pr#8574
+    components: [ adc_microphone ]
+
 # Enable logging
 logger:
   level: VERBOSE
@@ -66,3 +71,23 @@ output:
     pin: GPIO45
     id: output_BLUE
     inverted: true
+
+
+# i2c output (its not actually i2c, but we can pretend)
+i2s_audio:
+  - id: i2s_output
+    # i2s_output data pin is gpio10
+    i2s_lrclk_pin:
+      number: GPIO7
+    i2s_bclk_pin:
+      number: GPIO8
+
+microphone:
+  - platform: adc_microphone
+    id: mic_id
+    adc_pin: GPIO2
+    on_data:
+      - logger.log:
+          format: "Received %d bytes"
+          args: ['x.size()']
+      - lambda: 
