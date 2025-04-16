@@ -9,9 +9,9 @@ esp32:
     version: recommended
 
 external_components:
-  - source: github://stas-sl/esphome-sound-level-meter
   - source: github://pr#8574
     components: [ adc_microphone ]
+    refresh: 10min
 
 # Enable logging
 logger:
@@ -108,6 +108,6 @@ sensor:
   expire_after: 5s
 
 mqtt:
-  broker: 10.20.0.1
+  broker: 10.0.20.1
   username: calumspeaker
   password: !secret mqtt_password_calumspeaker
