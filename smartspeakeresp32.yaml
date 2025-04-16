@@ -96,6 +96,13 @@ i2s_audio:
     i2s_bclk_pin:
       number: GPIO8
 
+speaker:
+  - platform: i2s_audio
+    dac_type: external
+    i2s_dout_pin: GPIOXX
+    i2s_comm_fmt: stand_msb
+    channel: mono
+
 microphone:
   - platform: adc_microphone
     id: mic_id
