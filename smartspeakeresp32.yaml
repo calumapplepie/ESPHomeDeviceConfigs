@@ -16,17 +16,24 @@ external_components:
 # Enable logging
 logger:
   level: VERBOSE
+  logs:
+    ledc.output: INFO
+
 
 # Enable Home Assistant API
 api:
   encryption:
     key: !secret smartspeaker_ha_key
-  actions:
-    - action: start_record
+
+button:
+  - platform: template
+    name: StartRecord
+    id: mic_button
+    on_press:
       then:
-        - microphone.capture
+        - microphone.capture: mic_id
         - delay: 15s
-        - microphone.stop_capture
+        - microphone.stop_capture: mic_id
 
 ota:
   - platform: esphome
@@ -117,4 +124,5 @@ mqtt:
   broker: 10.20.0.1
   username: calumspeaker
   password: !secret mqtt_password_calumspeaker
+  discovery: False
 
