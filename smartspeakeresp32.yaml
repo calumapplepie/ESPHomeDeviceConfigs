@@ -21,6 +21,12 @@ logger:
 api:
   encryption:
     key: !secret smartspeaker_ha_key
+  actions:
+    - action: start_record
+      then:
+        - microphone.capture
+        - delay: 15s
+        - microphone.stop_capture
 
 ota:
   - platform: esphome
@@ -105,9 +111,10 @@ sensor:
   name: "ADC Average Value"
   platform: template
   accuracy_decimals: 5
-  expire_after: 5s
+  expire_after: 2s
 
 mqtt:
-  broker: 10.0.20.1
+  broker: 10.20.0.1
   username: calumspeaker
   password: !secret mqtt_password_calumspeaker
+
