@@ -11,11 +11,11 @@ esp32:
 external_components:
   - source: github://pr#8574
     components: [ adc_microphone ]
-    refresh: 40min
+    refresh: 1min
 
 # Enable logging
 logger:
-  level: VERBOSE
+  level: VERY_VERBOSE
   logs:
     ledc.output: INFO
 
@@ -32,7 +32,7 @@ button:
     on_press:
       then:
         - microphone.capture: mic_id
-        - delay: 8s
+        - delay: 1s
         - microphone.stop_capture: mic_id
 
 ota:
