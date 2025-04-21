@@ -28,7 +28,7 @@ external_components:
 
 # Enable logging
 logger:
-  level: VERY_VERBOSE
+  level: VERBOSE
   logs:
     ledc.output: INFO
 
@@ -269,3 +269,20 @@ voice_assistant:
         id: media_mixing_input
         decibel_reduction: 0
         duration: 1.0s
+
+switch:
+  - platform: template
+    name: Start Listening
+    id: start_listening
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON
+    entity_category: config
+    on_turn_on:
+      - if:
+          condition:
+            not:
+              - voice_assistant.is_running
+          then:
+            - voice_assistant.start_continuous
+    on_turn_off:
+      - voice_assistant.stop
