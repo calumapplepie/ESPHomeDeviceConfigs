@@ -21,7 +21,6 @@ logger:
   level: VERBOSE
   logs:
     ledc.output: INFO
-    adc_microphone: DEBUG
 
 
 # Enable Home Assistant API
@@ -75,17 +74,23 @@ light:
 
 output:
   - platform: ledc
-    pin: GPIO46
+    pin: 
+      number: GPIO46
+      ignore_strapping_warning: true
     id: output_RED
     inverted: true
 
   - platform: ledc
-    pin: GPIO0
+    pin: 
+      number: GPIO0
+      ignore_strapping_warning: true
     id: output_GREEN
     inverted: true
 
   - platform: ledc
-    pin: GPIO45
+    pin: 
+      number: GPIO45
+      ignore_strapping_warning: true
     id: output_BLUE
     inverted: true
 
