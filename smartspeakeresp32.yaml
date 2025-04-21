@@ -28,14 +28,15 @@ external_components:
 
 # Enable logging
 logger:
-  level: VERBOSE
+  level: VERY_VERBOSE
   logs:
     ledc.output: INFO
 
 # Setup PSRAM to solve OOM errors
 psram:
   mode: octal
-  speed: 80MHz # undoccumented if 80MHz is supported, but octal definitely is
+  speed: 40MHz # undoccumented if 80MHz is supported, but octal definitely is.
+  # testing had errors when running at 80MHz
 
 
 # Enable Home Assistant API
