@@ -9,7 +9,17 @@ esp32:
   board: arduino_nano_esp32
   framework:
     type: esp-idf
-    version: recommended
+    version: latest
+
+    # add some config options from voice assistant PE
+    # these mostly serve as 'go faster' buttons
+    sdkconfig_options:
+      CONFIG_ESP32S3_DEFAULT_CPU_FREQ_240: "y"
+      CONFIG_ESP32S3_DATA_CACHE_64KB: "y" # bigger data cache because we will have psram
+      CONFIG_ESP32S3_DATA_CACHE_LINE_64B: "y"
+      CONFIG_ESP32S3_INSTRUCTION_CACHE_32KB: "y"
+
+      CONFIG_MBEDTLS_EXTERNAL_MEM_ALLOC: "y"
 
 external_components:
   - source: github://pr#8574
@@ -21,6 +31,11 @@ logger:
   level: VERBOSE
   logs:
     ledc.output: INFO
+
+# Setup PSRAM to solve OOM errors
+psram:
+  mode: octal
+  speed: 80MHz # undoccumented if 80MHz is supported, but octal definitely is
 
 
 # Enable Home Assistant API
