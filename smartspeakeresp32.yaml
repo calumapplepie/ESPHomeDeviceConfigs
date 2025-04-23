@@ -276,7 +276,6 @@ switch:
     id: start_listening
     optimistic: true
     restore_mode: RESTORE_DEFAULT_ON
-    entity_category: config
     on_turn_on:
       - if:
           condition:
