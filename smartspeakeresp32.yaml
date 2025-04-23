@@ -115,11 +115,11 @@ output:
 # TODO: finish making`
 i2s_audio:
   - id: i2s_output
-    # i2s_output data pin is gpio10
+    # i2s_output data pin is set below
     i2s_lrclk_pin:
-      number: GPIO12
+      number: GPIO18 # pin D9
     i2s_bclk_pin:
-      number: GPIO13
+      number: GPIO10 # pin D7
 
 speaker:
   - platform: i2s_audio
@@ -127,7 +127,7 @@ speaker:
     dac_type: external
     sample_rate: 48000
     i2s_mode: primary
-    i2s_dout_pin: GPIO11
+    i2s_dout_pin: GPIO38 # pin D11
     i2s_comm_fmt: stand_msb
     channel: mono
     bits_per_sample: 16bit
@@ -210,7 +210,7 @@ media_player:
 microphone:
   - platform: adc_microphone
     id: mic_id
-    adc_pin: GPIO2
+    adc_pin: GPIO3 # pin A2
     on_data:
       - logger.log:
           format: "Received %d bytes"
