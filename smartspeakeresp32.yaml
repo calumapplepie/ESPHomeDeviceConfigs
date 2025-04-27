@@ -3,7 +3,7 @@ esphome:
   friendly_name: SmartSpeakerESP32
 
 substitutions:
-  speaker_sample_rate: "48000"
+  speaker_sample_rate: "44100"
 
 esp32:
   board: arduino_nano_esp32
@@ -24,6 +24,9 @@ esp32:
 external_components:
   - source: github://pr#8574
     components: [ adc_microphone ]
+    refresh: 50min
+  - source: github://pr#8633
+    components: [ speaker_math ]
     refresh: 2min
 
 # Enable logging
@@ -125,7 +128,7 @@ speaker:
   - platform: i2s_audio
     id: speaker_dac_out
     dac_type: external
-    sample_rate: 48000
+    sample_rate: $speaker_sample_rate
     i2s_mode: primary
     i2s_dout_pin: GPIO38 # pin D11
     i2s_comm_fmt: stand_msb
@@ -133,9 +136,13 @@ speaker:
     bits_per_sample: 16bit
     buffer_duration: 500ms
     # Virtual speakers to combine the announcement and media streams together into one output
+  - platform: speaker_math
+    id: mathing_speaker
+    output_speaker: speaker_dac_out
+    convert_to_unsigned: true
   - platform: mixer
     id: mixing_speaker
-    output_speaker: speaker_dac_out
+    output_speaker: mathing_speaker
     num_channels: 2
     source_speakers:
       - id: announcement_mixing_input
@@ -161,7 +168,7 @@ media_player:
     name: Media Player
     internal: False
     volume_increment: 0.05
-    volume_min: 0.4
+    volume_min: 0
     volume_max: 0.85
     announcement_pipeline:
       speaker: announcement_resampling_speaker
