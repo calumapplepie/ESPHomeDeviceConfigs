@@ -170,7 +170,7 @@ media_player:
     internal: False
     volume_increment: 0.05
     volume_min: 0
-    volume_max: 0.85
+    volume_max: 1
     announcement_pipeline:
       speaker: announcement_resampling_speaker
       format: FLAC     # FLAC is the least processor intensive codec
