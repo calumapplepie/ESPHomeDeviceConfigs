@@ -24,7 +24,7 @@ esp32:
 external_components:
   - source: github://pr#8574
     components: [ adc_microphone ]
-    refresh: 50min
+    refresh: 1days
   - source: github://pr#8633
     components: [ speaker_math ]
     refresh: 2min
@@ -135,11 +135,12 @@ speaker:
     channel: mono
     bits_per_sample: 16bit
     buffer_duration: 500ms
-    # Virtual speakers to combine the announcement and media streams together into one output
+  # Custom speaker_math component which converts data to be unsigned
   - platform: speaker_math
     id: mathing_speaker
     output_speaker: speaker_dac_out
     convert_to_unsigned: true
+  # Virtual speakers to combine the announcement and media streams together into one output
   - platform: mixer
     id: mixing_speaker
     output_speaker: mathing_speaker
