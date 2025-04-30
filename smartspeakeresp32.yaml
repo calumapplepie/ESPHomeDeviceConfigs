@@ -218,20 +218,20 @@ media_player:
 microphone:
   - platform: adc_microphone
     id: mic_id
-    adc_pin: GPIO3 # pin A2
-    on_data:
-      - logger.log:
-          format: "Received %d bytes"
-          args: ['x.size()']
-      - sensor.template.publish:
-          id: adc_average
-          state: !lambda |-
-            int size = x.size();
-            double sum  = 0;
-            for(auto i : x) {
-              sum += i;
-            }
-            return sum / size;
+    adc_pin: GPIO4 # pin A2
+    # on_data:
+    #   - logger.log:
+    #       format: "Received %d bytes"
+    #       args: ['x.size()']
+    #   - sensor.template.publish:
+    #       id: adc_average
+    #       state: !lambda |-
+    #         int size = x.size();
+    #         double sum  = 0;
+    #         for(auto i : x) {
+    #           sum += i;
+    #         }
+    #         return sum / size;
 
 sensor:
   id: adc_average
