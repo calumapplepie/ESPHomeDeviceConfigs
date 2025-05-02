@@ -24,7 +24,7 @@ esp32:
 external_components:
   - source: github://pr#8574
     components: [ adc_microphone, voice_assistant, microphone, i2s_audio]
-    refresh: 1days
+    refresh: 2min
   - source: github://pr#8633
     components: [ speaker_math ]
     refresh: 1days
@@ -219,6 +219,7 @@ microphone:
   - platform: adc_microphone
     id: mic_id
     adc_pin: GPIO4 # pin A2
+    sample_rate: 16000
     on_data:
       - logger.log:
           format: "Received %d bytes"
