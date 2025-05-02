@@ -23,11 +23,11 @@ esp32:
 
 external_components:
   - source: github://pr#8574
-    components: [ adc_microphone ]
+    components: [ adc_microphone, voice_assistant, microphone, i2s_audio]
     refresh: 1days
   - source: github://pr#8633
     components: [ speaker_math ]
-    refresh: 2min
+    refresh: 1days
 
 # Enable logging
 logger:
@@ -219,19 +219,19 @@ microphone:
   - platform: adc_microphone
     id: mic_id
     adc_pin: GPIO4 # pin A2
-    # on_data:
-    #   - logger.log:
-    #       format: "Received %d bytes"
-    #       args: ['x.size()']
-    #   - sensor.template.publish:
-    #       id: adc_average
-    #       state: !lambda |-
-    #         int size = x.size();
-    #         double sum  = 0;
-    #         for(auto i : x) {
-    #           sum += i;
-    #         }
-    #         return sum / size;
+    on_data:
+      - logger.log:
+          format: "Received %d bytes"
+          args: ['x.size()']
+      - sensor.template.publish:
+          id: adc_average
+          state: !lambda |-
+            int size = x.size();
+            double sum  = 0;
+            for(auto i : x) {
+              sum += i;
+            }
+            return sum / size;
 
 sensor:
   id: adc_average
@@ -291,5 +291,19 @@ switch:
               - voice_assistant.is_running
           then:
             - voice_assistant.start_continuous
+    on_turn_off:
+      - voice_assistant.stop
+  - platform: template
+    name: Push to Listen
+    id: push_to_talk
+    optimistic: true
+    on_turn_on:
+      - if:
+          condition:
+            - voice_assistant.is_running
+          then:
+            - voice_assistant.stop
+      - voice_assistant.start:
+          silence_detection: false
     on_turn_off:
       - voice_assistant.stop
