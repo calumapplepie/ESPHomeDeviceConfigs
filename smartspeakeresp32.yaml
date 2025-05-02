@@ -24,10 +24,10 @@ esp32:
 external_components:
   - source: github://pr#8574
     components: [ adc_microphone, voice_assistant, microphone, i2s_audio]
-    refresh: 2min
+    refresh: 1days
   - source: github://pr#8633
     components: [ speaker_math ]
-    refresh: 1days
+    refresh: 20min
 
 # Enable logging
 logger:
@@ -123,6 +123,8 @@ i2s_audio:
       number: GPIO18 # pin D9
     i2s_bclk_pin:
       number: GPIO10 # pin D7
+    #use_legacy: true
+
 
 speaker:
   - platform: i2s_audio
@@ -140,6 +142,7 @@ speaker:
     id: mathing_speaker
     output_speaker: speaker_dac_out
     convert_to_unsigned: true
+    intercept_volume: true
   # Virtual speakers to combine the announcement and media streams together into one output
   - platform: mixer
     id: mixing_speaker
