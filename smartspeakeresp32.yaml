@@ -264,23 +264,28 @@ voice_assistant:
   on_client_disconnected:
     - voice_assistant.stop:
   
-  # When the voice assistant starts: Play a wake up sound, duck audio.
-  on_start:
+  # When the voice assistant detects a wake word
+  on_wake_word_detected:
     - mixer_speaker.apply_ducking:
         id: media_mixing_input
         decibel_reduction: 20  # Number of dB quieter; higher implies more quiet, 0 implies full volume
         duration: 0.0s         # The duration of the transition (default is no transition)
   
-  # When the voice assistant ends ...
+  # When the voice assistant ends ... (needs testing)
   on_end:
-    - wait_until:
-        not:
-          voice_assistant.is_running:
-    # Stop ducking audio.
-    - mixer_speaker.apply_ducking:
-        id: media_mixing_input
-        decibel_reduction: 0
-        duration: 1.0s
+    then:
+      # Stop ducking audio.
+      - mixer_speaker.apply_ducking:
+          id: media_mixing_input
+          decibel_reduction: 0
+          duration: 1.0s
+      # if the switch to keep listening is still on... keep listening
+      - if:
+          condition:
+            switch.is_on: push_to_talk
+          then:
+            - voice_assistant.start
+
 
 switch:
   - platform: template
@@ -307,7 +312,6 @@ switch:
             - voice_assistant.is_running
           then:
             - voice_assistant.stop
-      - voice_assistant.start:
-          silence_detection: false
+      - voice_assistant.start
     on_turn_off:
       - voice_assistant.stop
