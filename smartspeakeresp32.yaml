@@ -188,7 +188,7 @@ media_player:
     on_announcement:
       - mixer_speaker.apply_ducking:
           id: media_mixing_input
-          decibel_reduction: 20
+          decibel_reduction: 10
           duration: 0.0s
     on_state:
       if:
@@ -268,7 +268,7 @@ voice_assistant:
   on_wake_word_detected:
     - mixer_speaker.apply_ducking:
         id: media_mixing_input
-        decibel_reduction: 20  # Number of dB quieter; higher implies more quiet, 0 implies full volume
+        decibel_reduction: 10  # Number of dB quieter; higher implies more quiet, 0 implies full volume
         duration: 0.0s         # The duration of the transition (default is no transition)
   
   # When the voice assistant ends ... (needs testing)
